@@ -72,6 +72,7 @@ function handleClick(event) {
         }
     }
     generateImages();
+    console.table(picArray);
 }
 
 function createOnPageLoad() {
