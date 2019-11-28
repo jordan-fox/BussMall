@@ -1,0 +1,19 @@
+body {
+    width: 100%;
+}
+
+header {
+    text-align: center;
+}
+
+section {
+    display: inline-block;
+    width: 100%;
+}
+
+img {
+    border: 2px green solid;
+    float: left;
+    width: 20%;
+    margin: 5%;
+}
