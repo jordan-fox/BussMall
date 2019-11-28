@@ -64,9 +64,9 @@ function generateImages() {
         indexThree = randomIndex(picArray.length);
     }
     
-    picOne.src = picArray[indexThree].src;
-    picOne.title = picArray[indexThree].title;
-    picOne.alt = picArray[indexThree].alt;
+    picThree.src = picArray[indexThree].src;
+    picThree.title = picArray[indexThree].title;
+    picThree.alt = picArray[indexThree].alt;
 
 }
 

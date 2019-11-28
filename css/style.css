@@ -1,4 +1,5 @@
 body {
+    width: 100%;
     background-color: aquamarine;
 }
 
@@ -6,3 +7,13 @@ header {
     text-align: center;
 }
 
+section {
+    width: 50%;
+    border: 2px red solid;
+}
+
+img {
+    float: left;
+    width: 20%;
+    margin: 5%;
+}
