@@ -10,27 +10,14 @@ var picThree = document.getElementById('picture3');
 var pictureContainer = document.getElementById('image-container');
 var picArray = [];
 
-// display 3 images side by side
-// image tag has 3 properties 'src', 'title', and 'alt'
-
-// picOne.src = '../img/bag.jpg';
-// picOne.title = 'bag';
-// picOne.alt = 'bag';
-
-// picTwo.src = '../img/banana.jpg';
-// picTwo.title = 'banana';
-// picTwo.alt = 'banana';
-
-// picThree.src = '../img/bathroom.jpg';
-// picThree.title = 'bathroom';
-// picThree.alt = 'bathroom';
-
 //make a constructor
 
-function Picture (src, name) {
+function Picture(src, name) {
     this.src = `../img/${src}.jpg`;
     this.title = name;
     this.alt = name;
+    this.clicked = 0;
+    this.viewed = 0;
 
     picArray.push(this);
 }
@@ -47,6 +34,8 @@ function generateImages() {
     picOne.src = picArray[index].src;
     picOne.title = picArray[index].title;
     picOne.alt = picArray[index].alt;
+
+    picArray[index].viewed++;
     
     var indexTwo = randomIndex(picArray.length);
 
@@ -58,6 +47,8 @@ function generateImages() {
     picTwo.title = picArray[indexTwo].title;
     picTwo.alt = picArray[indexTwo].alt;
 
+    picArray[indexTwo].viewed++;
+
     var indexThree = randomIndex(picArray.length);
 
     while(indexThree === index || indexThree === indexTwo) {
@@ -68,10 +59,19 @@ function generateImages() {
     picThree.title = picArray[indexThree].title;
     picThree.alt = picArray[indexThree].alt;
 
+    picArray[indexThree].viewed++;
+
 }
 
+
 function handleClick(event) {
-    console.log('it clickin\' worked');
+    var vote = event.target.title;
+    for (var i = 0; i < picArray.length; i++) {
+        if (vote === picArray[i].title) {
+            picArray[i].clicked++;
+        }
+    }
+    generateImages();
 }
 
 function createOnPageLoad() {
@@ -99,8 +99,6 @@ function createOnPageLoad() {
 
 createOnPageLoad();
 
-generateImages();
 pictureContainer.addEventListener('click', handleClick);
 
-
-console.table(picArray);
+generateImages();

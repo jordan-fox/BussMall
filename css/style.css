@@ -1,6 +1,5 @@
 body {
     width: 100%;
-    background-color: aquamarine;
 }
 
 header {
@@ -8,11 +7,12 @@ header {
 }
 
 section {
-    width: 50%;
-    border: 2px red solid;
+    display: inline-block;
+    width: 100%;
 }
 
 img {
+    border: 2px green solid;
     float: left;
     width: 20%;
     margin: 5%;
