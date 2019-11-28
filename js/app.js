@@ -7,6 +7,7 @@ console.log('proof of life');
 var picOne = document.getElementById('picture1');
 var picTwo = document.getElementById('picture2');
 var picThree = document.getElementById('picture3');
+var pictureContainer = document.getElementById('image-container');
 var picArray = [];
 
 // display 3 images side by side
@@ -49,17 +50,28 @@ function generateImages() {
     
     var indexTwo = randomIndex(picArray.length);
 
+    while(indexTwo === index) {
+        indexTwo = randomIndex(picArray.length);
+    }
+
     picTwo.src = picArray[indexTwo].src;
     picTwo.title = picArray[indexTwo].title;
     picTwo.alt = picArray[indexTwo].alt;
 
     var indexThree = randomIndex(picArray.length);
+
+    while(indexThree === index || indexThree === indexTwo) {
+        indexThree = randomIndex(picArray.length);
+    }
     
     picOne.src = picArray[indexThree].src;
     picOne.title = picArray[indexThree].title;
     picOne.alt = picArray[indexThree].alt;
 
-    console.log(index, indexTwo, indexThree);
+}
+
+function handleClick(event) {
+    console.log('it clickin\' worked');
 }
 
 function createOnPageLoad() {
@@ -83,9 +95,12 @@ function createOnPageLoad() {
     new Picture ('usb', 'usb');
     new Picture ('water-can', 'water can');
     new Picture ('wine-glass', 'wine glass');
-}
-
-
-console.log(picArray);
+};
 
 createOnPageLoad();
+
+generateImages();
+pictureContainer.addEventListener('click', handleClick);
+
+
+console.table(picArray);
