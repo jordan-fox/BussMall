@@ -76,10 +76,21 @@ function handleClick(event) {
     }
     generateImages();
     console.table(picArray);
-
   } else {
     pictureContainer.removeEventListener('click', handleClick);
+    analysis();
   }
+}
+
+function analysis() {
+  var resultsSection = document.getElementById('list');
+  var ulEl = document.createElement('ul');
+  for (var i = 0; i < picArray.length; i++) {
+    var liEl = document.createElement('li');
+    liEl.textContent = `${picArray[i].title}: ${picArray[i].clicked} clicks & ${picArray[i].viewed} views`;
+    ulEl.appendChild(liEl);
+  }
+  resultsSection.appendChild(ulEl);
 }
 
 // CANVAS FUNCTION
