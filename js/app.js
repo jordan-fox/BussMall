@@ -7,9 +7,11 @@ console.log('proof of life');
 var picOne = document.getElementById('picture1');
 var picTwo = document.getElementById('picture2');
 var picThree = document.getElementById('picture3');
+var resultsSection = document.getElementById('list');
 var pictureContainer = document.getElementById('image-container');
 var picArray = [];
-var voteRounds = 25;
+var picArrayContainers = [picOne, picTwo, picThree];
+var voteRounds = 5;
 
 //make a constructor
 
@@ -30,43 +32,23 @@ function randomIndex(max) {
 }
 
 function generateImages() {
-  var index = randomIndex(picArray.length);
-
-  picOne.src = picArray[index].src;
-  picOne.title = picArray[index].title;
-  picOne.alt = picArray[index].alt;
-
-  picArray[index].viewed++;
-
-  var indexTwo = randomIndex(picArray.length);
-
-  while(indexTwo === index) {
-    indexTwo = randomIndex(picArray.length);
+  var currentImages = [];
+  for(var i = 0 ; i < picArrayContainers.length; i++) {
+    var currentRandomIndex = randomIndex(picArray.length);
+    while (currentImages.includes(currentRandomIndex)) {
+      currentRandomIndex = randomIndex(picArray.length);
+    }
+    currentImages.push(currentRandomIndex);
+    picArrayContainers[i].src = picArray[currentRandomIndex].src;
+    picArrayContainers[i].title = picArray[currentRandomIndex].title;
+    picArrayContainers[i].alt = picArray[currentRandomIndex].alt;
+    picArray[currentRandomIndex].viewed++;
   }
-
-  picTwo.src = picArray[indexTwo].src;
-  picTwo.title = picArray[indexTwo].title;
-  picTwo.alt = picArray[indexTwo].alt;
-
-  picArray[indexTwo].viewed++;
-
-  var indexThree = randomIndex(picArray.length);
-
-  while(indexThree === index || indexThree === indexTwo) {
-    indexThree = randomIndex(picArray.length);
-  }
-
-  picThree.src = picArray[indexThree].src;
-  picThree.title = picArray[indexThree].title;
-  picThree.alt = picArray[indexThree].alt;
-
-  picArray[indexThree].viewed++;
-
 }
-
 
 function handleClick(event) {
   voteRounds--;
+
   if(voteRounds !== 0) {
     var vote = event.target.title;
     for (var i = 0; i < picArray.length; i++) {
@@ -79,11 +61,23 @@ function handleClick(event) {
   } else {
     pictureContainer.removeEventListener('click', handleClick);
     analysis();
+    hide(pictureContainer);
   }
 }
 
+//show hide functions
+
+function show(elem) {
+  elem.style.display = 'block';
+}
+
+function hide(elem) {
+  elem.style.display = 'none';
+}
+
+//create list
+
 function analysis() {
-  var resultsSection = document.getElementById('list');
   var ulEl = document.createElement('ul');
   for (var i = 0; i < picArray.length; i++) {
     var liEl = document.createElement('li');
