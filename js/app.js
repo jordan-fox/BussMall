@@ -61,6 +61,7 @@ function handleClick(event) {
   } else {
     pictureContainer.removeEventListener('click', handleClick);
     analysis();
+    makeViewsChart();
     hide(pictureContainer);
   }
 }
@@ -87,33 +88,45 @@ function analysis() {
   resultsSection.appendChild(ulEl);
 }
 
+//Canvas information found at https://www.chartjs.org/
 // CANVAS FUNCTION
 
-// function makeChart() {
-//   var ctx = document.getElementById('myChart').getContext('2d');
-//   var chart = new Chart(ctx, {
-//     // The type of chart we want to create
-//     type: 'line',
+var ctx = document.getElementById('myChart').getContext('2d');
+var makeViewsChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    datasets: [{
+      data: [0, 5, 10, 15, 20, 25],
+      label: 'Views',
+      backgroundColor: 'rgb(24, 226, 105)',
+      borderColor: 'rgb(24, 226, 105)',
 
-//     // The data for our dataset
-//     data: {
-//       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-//       datasets: [{
-
-//         label: 'My First dataset',
-//         backgroundColor: 'rgb(255, 99, 132)',
-//         borderColor: 'rgb(255, 99, 132)',
-//         data: [0, 10, 5, 2, 20, 30, 45]
-
-//       }]
-//     },
-
-//     // Configuration options go here
-//     options: {}
-//   });
-// }
-
-// makeChart();
+      // This binds the dataset to the left y axis
+      yAxisID: 'left-y-axis'
+    }, {
+      data: [0, 5, 10, 15, 20, 25],
+      label: 'Clicks',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      // This binds the dataset to the right y axis
+      yAxisID: 'right-y-axis'
+    }],
+    labels: ['1', '2', '3', '4', '5', '6']
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        id: 'left-y-axis',
+        type: 'linear',
+        position: 'left'
+      }, {
+        id: 'right-y-axis',
+        type: 'linear',
+        position: 'right'
+      }]
+    }
+  }
+});
 
 function createOnPageLoad() {
   new Picture ('bag', 'bag');
