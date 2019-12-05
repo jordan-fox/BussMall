@@ -135,16 +135,7 @@ function graphData() {
   });
 }
 
-//update chart info function
 
-// title in labels array in data
-
-// makeViewsChart.data.labels.push(
-//   'hello', 'goodbye'
-// );
-
-
-// number of clicks in data in datasets in data array
 
 function createOnPageLoad() {
   new Picture ('bag', 'bag');
