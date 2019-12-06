@@ -6,6 +6,16 @@ header {
     text-align: center;
 }
 
+/* ul {
+    width: 50%;
+    margin: auto;
+}
+
+li {
+    margin: 10px 0;
+    text-align: center;
+} */
+
 section {
     display: inline-block;
     width: 100%;

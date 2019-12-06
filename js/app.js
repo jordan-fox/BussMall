@@ -1,15 +1,27 @@
 'use strict';
 
-console.log('proof of life');
-
 // global variables
 
 var picOne = document.getElementById('picture1');
 var picTwo = document.getElementById('picture2');
 var picThree = document.getElementById('picture3');
+var resultsSection = document.getElementById('list');
 var pictureContainer = document.getElementById('image-container');
 var picArray = [];
+var picArrayContainers = [picOne, picTwo, picThree];
 var voteRounds = 25;
+
+var nameArray = [];
+var clickArray = [];
+var viewsArray = [];
+
+function populateData() {
+  for (var i = 0 ; i < picArray.length; i++) {
+    nameArray.push(picArray[i].title);
+    clickArray.push(picArray[i].clicked);
+    viewsArray.push(picArray[i].viewed);
+  }
+}
 
 //make a constructor
 
@@ -30,43 +42,23 @@ function randomIndex(max) {
 }
 
 function generateImages() {
-  var index = randomIndex(picArray.length);
-
-  picOne.src = picArray[index].src;
-  picOne.title = picArray[index].title;
-  picOne.alt = picArray[index].alt;
-
-  picArray[index].viewed++;
-
-  var indexTwo = randomIndex(picArray.length);
-
-  while(indexTwo === index) {
-    indexTwo = randomIndex(picArray.length);
+  var currentImages = [];
+  for(var i = 0 ; i < picArrayContainers.length; i++) {
+    var currentRandomIndex = randomIndex(picArray.length);
+    while (currentImages.includes(currentRandomIndex)) {
+      currentRandomIndex = randomIndex(picArray.length);
+    }
+    currentImages.push(currentRandomIndex);
+    picArrayContainers[i].src = picArray[currentRandomIndex].src;
+    picArrayContainers[i].title = picArray[currentRandomIndex].title;
+    picArrayContainers[i].alt = picArray[currentRandomIndex].alt;
+    picArray[currentRandomIndex].viewed++;
   }
-
-  picTwo.src = picArray[indexTwo].src;
-  picTwo.title = picArray[indexTwo].title;
-  picTwo.alt = picArray[indexTwo].alt;
-
-  picArray[indexTwo].viewed++;
-
-  var indexThree = randomIndex(picArray.length);
-
-  while(indexThree === index || indexThree === indexTwo) {
-    indexThree = randomIndex(picArray.length);
-  }
-
-  picThree.src = picArray[indexThree].src;
-  picThree.title = picArray[indexThree].title;
-  picThree.alt = picArray[indexThree].alt;
-
-  picArray[indexThree].viewed++;
-
 }
-
 
 function handleClick(event) {
   voteRounds--;
+
   if(voteRounds !== 0) {
     var vote = event.target.title;
     for (var i = 0; i < picArray.length; i++) {
@@ -78,48 +70,70 @@ function handleClick(event) {
     console.table(picArray);
   } else {
     pictureContainer.removeEventListener('click', handleClick);
-    analysis();
+    // analysis();
+    populateData();
+    graphData();
+    hide(pictureContainer);
   }
 }
 
-function analysis() {
-  var resultsSection = document.getElementById('list');
-  var ulEl = document.createElement('ul');
-  for (var i = 0; i < picArray.length; i++) {
-    var liEl = document.createElement('li');
-    liEl.textContent = `${picArray[i].title}: ${picArray[i].clicked} clicks & ${picArray[i].viewed} views`;
-    ulEl.appendChild(liEl);
-  }
-  resultsSection.appendChild(ulEl);
+//show hide functions
+
+function show(elem) {
+  elem.style.display = 'block';
 }
 
-// CANVAS FUNCTION
+function hide(elem) {
+  elem.style.display = 'none';
+}
 
-// function makeChart() {
-//   var ctx = document.getElementById('myChart').getContext('2d');
-//   var chart = new Chart(ctx, {
-//     // The type of chart we want to create
-//     type: 'line',
+//create list
 
-//     // The data for our dataset
-//     data: {
-//       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-//       datasets: [{
-
-//         label: 'My First dataset',
-//         backgroundColor: 'rgb(255, 99, 132)',
-//         borderColor: 'rgb(255, 99, 132)',
-//         data: [0, 10, 5, 2, 20, 30, 45]
-
-//       }]
-//     },
-
-//     // Configuration options go here
-//     options: {}
-//   });
+// function analysis() {
+//   var ulEl = document.createElement('ul');
+//   for (var i = 0; i < picArray.length; i++) {
+//     var liEl = document.createElement('li');
+//     liEl.textContent = `${picArray[i].title}: ${picArray[i].clicked} clicks & ${picArray[i].viewed} views`;
+//     ulEl.appendChild(liEl);
+//   }
+//   resultsSection.appendChild(ulEl);
 // }
 
-// makeChart();
+//Canvas information found at https://www.chartjs.org/ and CDN
+// CANVAS FUNCTION
+
+function graphData() {
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var makeViewsChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: nameArray,
+      datasets: [{
+        label: '# of Views',
+        data: viewsArray,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor:'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      },
+      {label: '# of Clicks',
+        data: clickArray,
+        backgroundColor: 'rgba(44, 200, 44, 0.2)',
+        borderColor:'rgba(44, 200, 44, 1)',
+        borderWidth: 1}]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
+
+
 
 function createOnPageLoad() {
   new Picture ('bag', 'bag');
