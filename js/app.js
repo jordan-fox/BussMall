@@ -5,7 +5,6 @@
 var picOne = document.getElementById('picture1');
 var picTwo = document.getElementById('picture2');
 var picThree = document.getElementById('picture3');
-var resultsSection = document.getElementById('list');
 var pictureContainer = document.getElementById('image-container');
 var picArray = [];
 var picArrayContainers = [picOne, picTwo, picThree];
@@ -67,10 +66,10 @@ function handleClick(event) {
       }
     }
     generateImages();
-    console.table(picArray);
   } else {
+    var stringPicArray = JSON.stringify(picArray);
+    localStorage.setItem('BusMallData', stringPicArray);
     pictureContainer.removeEventListener('click', handleClick);
-    // analysis();
     populateData();
     graphData();
     hide(pictureContainer);
@@ -79,25 +78,13 @@ function handleClick(event) {
 
 //show hide functions
 
-function show(elem) {
-  elem.style.display = 'block';
-}
+// function show(elem) {
+//   elem.style.display = 'block';
+// }
 
 function hide(elem) {
   elem.style.display = 'none';
 }
-
-//create list
-
-// function analysis() {
-//   var ulEl = document.createElement('ul');
-//   for (var i = 0; i < picArray.length; i++) {
-//     var liEl = document.createElement('li');
-//     liEl.textContent = `${picArray[i].title}: ${picArray[i].clicked} clicks & ${picArray[i].viewed} views`;
-//     ulEl.appendChild(liEl);
-//   }
-//   resultsSection.appendChild(ulEl);
-// }
 
 //Canvas information found at https://www.chartjs.org/ and CDN
 // CANVAS FUNCTION
@@ -158,8 +145,40 @@ function createOnPageLoad() {
   new Picture ('wine-glass', 'wine glass');
 }
 
-createOnPageLoad();
+function checkLocalStorage(){
+  if(localStorage.BusMallData){
+    //grab data from local storage
+    console.log('grabbing local storage');
+    var getStoredData = localStorage.getItem('BusMallData');
+    console.log('get stored data', JSON.parse(getStoredData));
+    picArray = JSON.parse(getStoredData);
+    generateImages();
+  } else {
+    //local storage is empty, instantiating images
+    createOnPageLoad();
+    generateImages();
+  }
+}
+
+checkLocalStorage();
+
 
 pictureContainer.addEventListener('click', handleClick);
 
-generateImages();
+
+//Persistent Local storage
+
+// var picArray = [];
+
+
+
+
+// console.log(getStoredData);
+
+// var parsedStoredData = JSON.parse(getStoredData);
+
+
+
+
+
+
