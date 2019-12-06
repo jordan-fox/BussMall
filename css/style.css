@@ -6,7 +6,7 @@ header {
     text-align: center;
 }
 
-ul {
+/* ul {
     width: 50%;
     margin: auto;
 }
@@ -14,7 +14,7 @@ ul {
 li {
     margin: 10px 0;
     text-align: center;
-}
+} */
 
 section {
     display: inline-block;

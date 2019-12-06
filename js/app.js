@@ -1,7 +1,5 @@
 'use strict';
 
-console.log('proof of life');
-
 // global variables
 
 var picOne = document.getElementById('picture1');
@@ -72,10 +70,10 @@ function handleClick(event) {
     console.table(picArray);
   } else {
     pictureContainer.removeEventListener('click', handleClick);
-    analysis();
+    // analysis();
     populateData();
     graphData();
-    // hide(pictureContainer);
+    hide(pictureContainer);
   }
 }
 
@@ -91,17 +89,17 @@ function hide(elem) {
 
 //create list
 
-function analysis() {
-  var ulEl = document.createElement('ul');
-  for (var i = 0; i < picArray.length; i++) {
-    var liEl = document.createElement('li');
-    liEl.textContent = `${picArray[i].title}: ${picArray[i].clicked} clicks & ${picArray[i].viewed} views`;
-    ulEl.appendChild(liEl);
-  }
-  resultsSection.appendChild(ulEl);
-}
+// function analysis() {
+//   var ulEl = document.createElement('ul');
+//   for (var i = 0; i < picArray.length; i++) {
+//     var liEl = document.createElement('li');
+//     liEl.textContent = `${picArray[i].title}: ${picArray[i].clicked} clicks & ${picArray[i].viewed} views`;
+//     ulEl.appendChild(liEl);
+//   }
+//   resultsSection.appendChild(ulEl);
+// }
 
-//Canvas information found at https://www.chartjs.org/
+//Canvas information found at https://www.chartjs.org/ and CDN
 // CANVAS FUNCTION
 
 function graphData() {
@@ -119,8 +117,8 @@ function graphData() {
       },
       {label: '# of Clicks',
         data: clickArray,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor:'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(44, 200, 44, 0.2)',
+        borderColor:'rgba(44, 200, 44, 1)',
         borderWidth: 1}]
     },
     options: {
