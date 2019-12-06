@@ -150,11 +150,9 @@ function checkLocalStorage(){
     //grab data from local storage
     console.log('grabbing local storage');
     var getStoredData = localStorage.getItem('BusMallData');
-    console.log('get stored data', getStoredData);
-    for(var i = 0; i < getStoredData.length; i++) {
-      // new Picture(getStoredData[i].src, getStoredData[i].name);
-      console.log('kangaroo ', getStoredData[i].name);
-    }
+    console.log('get stored data', JSON.parse(getStoredData));
+    picArray = JSON.parse(getStoredData);
+    generateImages();
   } else {
     //local storage is empty, instantiating images
     createOnPageLoad();
