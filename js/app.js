@@ -16,6 +16,8 @@ var nameArray = [];
 var clickArray = [];
 var viewsArray = [];
 
+
+
 function populateData() {
   for (var i = 0 ; i < picArray.length; i++) {
     nameArray.push(picArray[i].title);
@@ -24,7 +26,7 @@ function populateData() {
   }
 }
 
-//make a constructor
+//Constructor function
 
 function Picture(src, name) {
   this.src = `../img/${src}.jpg`;
@@ -42,6 +44,7 @@ function randomIndex(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+// Generate Unique image each time functions
 
 function getUnique() {
   while (uniqueIndexes.length < 6) {
@@ -58,7 +61,6 @@ function removeThree() {
   }
 }
 
-
 function generateImages() {
   getUnique();
 
@@ -71,6 +73,8 @@ function generateImages() {
     picArray[uniqueIndexes[i]].viewed++;
   }
 }
+
+// Function that triggers on image click
 
 function handleClick(event) {
   voteRounds--;
@@ -95,11 +99,7 @@ function handleClick(event) {
   }
 }
 
-//show hide functions
-
-// function show(elem) {
-//   elem.style.display = 'block';
-// }
+//hide function
 
 function hide(elem) {
   elem.style.display = 'none';
@@ -118,13 +118,13 @@ function graphData() {
         label: '# of Views',
         data: viewsArray,
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor:'rgba(255, 99, 132, 1)',
+        borderColor:'rgba(0, 0, 0, 1)',
         borderWidth: 1
       },
       {label: '# of Clicks',
         data: clickArray,
         backgroundColor: 'rgba(44, 200, 44, 0.2)',
-        borderColor:'rgba(44, 200, 44, 1)',
+        borderColor:'rgba(0, 0, 0, 1)',
         borderWidth: 1}]
     },
     options: {
@@ -139,48 +139,41 @@ function graphData() {
   });
 }
 
-
-
 function createOnPageLoad() {
-  new Picture ('bag', 'bag');
-  new Picture ('banana', 'banana');
-  new Picture ('bathroom', 'bathroom');
-  new Picture ('boots', 'boots');
-  new Picture ('breakfast', 'breakfast');
-  new Picture ('bubblegum', 'bubblegum');
-  new Picture ('chair', 'chair');
-  new Picture ('cthulhu', 'cthulhu');
-  new Picture ('dog-duck', 'dog duck');
-  new Picture ('dragon', 'dragon');
-  new Picture ('pen', 'pen');
-  new Picture ('pet-sweep', 'pet sweep');
-  new Picture ('scissors', 'scissors');
-  new Picture ('shark', 'shark');
-  new Picture ('sweep', 'sweep');
-  new Picture ('tauntaun', 'tauntaun');
-  new Picture ('unicorn', 'unicorn');
-  new Picture ('usb', 'usb');
-  new Picture ('water-can', 'water can');
-  new Picture ('wine-glass', 'wine glass');
+  new Picture ('bag', 'R2-D2 Luggage');
+  new Picture ('banana', 'Banana Cutter');
+  new Picture ('bathroom', 'Bathroom Tablet Stand');
+  new Picture ('boots', 'Toeless Boots');
+  new Picture ('breakfast', 'All-in-One Breakfast Maker');
+  new Picture ('bubblegum', 'Meatball BubbleGum');
+  new Picture ('chair', 'Bubble Chair');
+  new Picture ('cthulhu', 'Toy Cthulhu');
+  new Picture ('dog-duck', 'Dog Duck Beak');
+  new Picture ('dragon', 'Canned Dragon Meat');
+  new Picture ('pen', 'Pen Utensil');
+  new Picture ('pet-sweep', 'Dust Boots for Pets');
+  new Picture ('scissors', 'Pizza Scissors');
+  new Picture ('shark', 'Shark Sleeping Bag');
+  new Picture ('sweep', 'Baby Dust Onesie');
+  new Picture ('tauntaun', 'Tauntaun Sleeping Bag');
+  new Picture ('unicorn', 'Canned Unicorn Meat');
+  new Picture ('usb', 'Tentacle USB');
+  new Picture ('water-can', 'Self-watering Can');
+  new Picture ('wine-glass', 'Wine Glass');
 }
 
 //Local Storage function
 
 function checkLocalStorage(){
   if(localStorage.BusMallData){
-    //grab data from local storage
-    console.log('grabbing local storage');
     var getStoredData = localStorage.getItem('BusMallData');
-    console.log('get stored data', JSON.parse(getStoredData));
     picArray = JSON.parse(getStoredData);
     generateImages();
   } else {
-    //local storage is empty, instantiating images
     createOnPageLoad();
     generateImages();
   }
 }
 
 checkLocalStorage();
-
 pictureContainer.addEventListener('click', handleClick);
