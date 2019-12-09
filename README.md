@@ -3,8 +3,10 @@
 **Purpose:** To allow company to track which products are popular and should be offered in their BusMall magazine.
 
 Author: Jordan Fox
+
 Last Updated: Dec. 9th, 2019
-Deployed Site:
+
+Deployed Site: https://jordan-fox.github.io/BussMall/
 
 To run app: Use 'live-server' from root of project.
 
