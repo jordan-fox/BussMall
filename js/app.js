@@ -7,7 +7,9 @@ var picTwo = document.getElementById('picture2');
 var picThree = document.getElementById('picture3');
 var pictureContainer = document.getElementById('image-container');
 var picArray = [];
-var picArrayContainers = [picOne, picTwo, picThree];
+var uniqueIndexes = [];
+var pics = [picOne, picTwo, picThree];
+var picNames = [picOne, picTwo, picThree];
 var voteRounds = 25;
 
 var nameArray = [];
@@ -40,18 +42,33 @@ function randomIndex(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-function generateImages() {
-  var currentImages = [];
-  for(var i = 0 ; i < picArrayContainers.length; i++) {
-    var currentRandomIndex = randomIndex(picArray.length);
-    while (currentImages.includes(currentRandomIndex)) {
-      currentRandomIndex = randomIndex(picArray.length);
+
+function getUnique() {
+  while (uniqueIndexes.length < 6) {
+    var random = randomIndex(picArray.length);
+    if (!uniqueIndexes.includes(random)) {
+      uniqueIndexes.push(random);
     }
-    currentImages.push(currentRandomIndex);
-    picArrayContainers[i].src = picArray[currentRandomIndex].src;
-    picArrayContainers[i].title = picArray[currentRandomIndex].title;
-    picArrayContainers[i].alt = picArray[currentRandomIndex].alt;
-    picArray[currentRandomIndex].viewed++;
+  }
+}
+
+function removeThree() {
+  for (var i = 0; i < 3; i++) {
+    uniqueIndexes.shift();
+  }
+}
+
+
+function generateImages() {
+  getUnique();
+
+  for (var i = 0; i < pics.length; i++) {
+    pics[i].src = picArray[uniqueIndexes[i]].src;
+    pics[i].title = picArray[uniqueIndexes[i]].title;
+    pics[i].alt = picArray[uniqueIndexes[i]].alt;
+    picNames[i].textContent = picArray[uniqueIndexes[i]].title;
+
+    picArray[uniqueIndexes[i]].viewed++;
   }
 }
 
@@ -65,8 +82,10 @@ function handleClick(event) {
         picArray[i].clicked++;
       }
     }
+    removeThree();
     generateImages();
   } else {
+
     var stringPicArray = JSON.stringify(picArray);
     localStorage.setItem('BusMallData', stringPicArray);
     pictureContainer.removeEventListener('click', handleClick);
@@ -145,6 +164,8 @@ function createOnPageLoad() {
   new Picture ('wine-glass', 'wine glass');
 }
 
+//Local Storage function
+
 function checkLocalStorage(){
   if(localStorage.BusMallData){
     //grab data from local storage
@@ -162,23 +183,4 @@ function checkLocalStorage(){
 
 checkLocalStorage();
 
-
 pictureContainer.addEventListener('click', handleClick);
-
-
-//Persistent Local storage
-
-// var picArray = [];
-
-
-
-
-// console.log(getStoredData);
-
-// var parsedStoredData = JSON.parse(getStoredData);
-
-
-
-
-
-
