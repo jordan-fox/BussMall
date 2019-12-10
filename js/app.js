@@ -29,7 +29,7 @@ function populateData() {
 //Constructor function
 
 function Picture(src, name) {
-  this.src = `../img/${src}.jpg`;
+  this.src = `img/${src}.jpg`;
   this.title = name;
   this.alt = name;
   this.clicked = 0;
